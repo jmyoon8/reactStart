@@ -15,21 +15,21 @@ module.exports={
         inline:true,
         //리로딩 될때 필요한 ip주소
         host:'0.0.0.0',
-        port:4000,
+        port:3000,
         //인덱스파일 위치
         contentBase:__dirname+'/public/',
     },
 
     module:{
-        loaders:[
+        rules:[
             {
                 test:/\.js$/,
-                loader:'babel',
+                loader:'babel-loader',
                 exclude:/node_modules/,
                 query:{
                     cacheDirectory:true,
                     //리엑트 문법을 자바스크립트 문법으로 변환해준다(웹브라우저가 읽을수있도록?)
-                    presets:['es2015','react']
+                    presets:['@babel/preset-env', '@babel/preset-react']
                 }
             }
         ]
