@@ -14,9 +14,9 @@ module.exports={
         //inline : webpack-dev-server모듈을 같은 output에 넣어주겠냐?
         inline:true,
         //리로딩 될때 필요한 ip주소
-        host:'0.0.0.0',
+        host:'localhost',
         port:3000,
-        //인덱스파일 위치
+        //인덱스.html파일 위치
         contentBase:__dirname+'/public/',
     },
 
