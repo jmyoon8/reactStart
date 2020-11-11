@@ -29,8 +29,7 @@ module.exports={
                 query:{
                     cacheDirectory:true,
                     //리엑트 문법을 자바스크립트 문법으로 변환해준다(웹브라우저가 읽을수있도록?)
-                    presets:['@babel/preset-env', '@babel/preset-react'],
-                    plugins: ["react-hot-loader/babel"]
+                    presets:['@babel/preset-env', '@babel/preset-react']
                 }
             }
         ]

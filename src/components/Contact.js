@@ -1,6 +1,7 @@
 import React from 'react'
 import ContactInfo from'./ContactInfo';
 import ContactDetails from'./ContactDetails';
+import ContactCreate from'./ContactCreate';
 import update from'react-addons-update';
 
 export default class Contact extends React.Component{
@@ -26,6 +27,9 @@ export default class Contact extends React.Component{
         };
         this.handleChange=this.handleChange.bind(this);
         this.handleClick=this.handleClick.bind(this)
+        this.handleCreate=this.handleCreate.bind(this)
+        this.handleRemove=this.handleRemove.bind(this)
+        this.handleEdit=this.handleEdit.bind(this)
     }
     
     handleChange(e){
@@ -39,6 +43,31 @@ export default class Contact extends React.Component{
             selectedKey : key
         });
         console.log(key)
+    }
+    //업데이트는 수정된 배열을 반환한다.
+    handleCreate(contact){
+        this.setState({
+            contactData : update(this.state.contactData,{$push:[contact]})
+        })
+    }
+    handleRemove(){
+        if(this.state.selectedKey<0){
+            return;
+        }
+        this.setState({
+            contactData: update(this.state.contactData,{$splice:[[this.state.selectedKey,1]]}),
+            selectedKey : -1
+        });
+    }
+    handleEdit(name,phone){
+        this.setState({
+            contactData:update(this.state.contactData,{
+                [this.state.selectedKey]:{
+                    name:{$set:name},
+                    phone:{$set:phone}
+                }
+            })
+        })
     }
     render() {
         const mapToComponents = (data) => {
@@ -69,7 +98,15 @@ export default class Contact extends React.Component{
 
                 <div>{mapToComponents(this.state.contactData)}</div>
                 <br/>
-                <ContactDetails contact={this.state.contactData[this.state.selectedKey]}  isSelected={this.state.selectedKey}/>
+                <ContactDetails
+                contact={this.state.contactData[this.state.selectedKey]}
+                isSelected={this.state.selectedKey}
+                onRemove={this.handleRemove}
+                onEdit={this.handleEdit}
+                />
+                <ContactCreate 
+                    onCreate={this.handleCreate}
+                />
             </div>
         );
     }
